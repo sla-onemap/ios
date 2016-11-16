@@ -9,7 +9,7 @@ Created by Alan Zhu on 16/11/16.
 
 ## Notes
 
-Project configurations:
+Project configurations
     * Import Settings.bundle into the project. (Downloaded from MapBox iOS SDK page)
     * Add the location privacy descriptions in info.plist.
     * Add App Transport Security Settings to allow Allow Arbitrary Loads in info.plist.
