@@ -22,3 +22,6 @@ Map Style example:
 * https://www.mapbox.com/ios-sdk/examples/marker-image/
 * https://www.mapbox.com/ios-sdk/examples/annotation-models/
 * https://www.mapbox.com/ios-sdk/examples/callout-delegate/
+
+Marker Infomation
+* http://www.yoursingapore.com/en.html
