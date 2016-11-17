@@ -36,10 +36,10 @@
 
 @interface ViewController ()
 {
-    //Private declarations here.
-    
     //Track current map style.
     NSInteger mapStyleTag;
+    
+    NSArray * basemaps;
 }
 @end
 
@@ -61,7 +61,6 @@ static NSString * const FORMAT_MAP_URL          = @"%@%@%@";
 static NSString * const URL_MAP                 = @"https://maps-json.onemap.sg/";
 
 static NSString * const URL_MAP_EXTN            = @".json";
-    
 
     
 #pragma mark - View Life Cycle Methods
@@ -69,6 +68,8 @@ static NSString * const URL_MAP_EXTN            = @".json";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    basemaps = @[@"Default", @"Original", @"Night", @"Grey"];
     
     [self initMapView];
 }
@@ -122,17 +123,6 @@ static NSString * const URL_MAP_EXTN            = @".json";
     
     // Move map view to the back.
     [self.view sendSubviewToBack:self.mapView];
-}
-
-    
-- (NSURL *)getMapStyleURLForStyle:(NSString *)style
-{
-    NSString * urlString = [NSString stringWithFormat:FORMAT_MAP_URL,
-                                URL_MAP,
-                                style,
-                                URL_MAP_EXTN];
-    
-    return [NSURL URLWithString:urlString];
 }
 
 
@@ -199,16 +189,26 @@ static NSString * const URL_MAP_EXTN            = @".json";
     
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
-    if(mapStyleTag != item.tag && self.mapView)
+    if(self.mapView && mapStyleTag != item.tag)
     {
         //If the map style is different, change the style URL on the map view.
         mapStyleTag = item.tag;
         
-        NSURL * mapStyleURL = [self getMapStyleURLForStyle:item.title];
+        NSURL * mapStyleURL = [self getMapStyleURLForStyle:[basemaps objectAtIndex:item.tag]];
         
         [self.mapView setStyleURL:mapStyleURL];
     }
 }
 
+
+- (NSURL *)getMapStyleURLForStyle:(NSString *)style
+{
+    NSString * urlString = [NSString stringWithFormat:FORMAT_MAP_URL,
+                            URL_MAP,
+                            style,
+                            URL_MAP_EXTN];
     
+    return [NSURL URLWithString:urlString];
+}
+
 @end
