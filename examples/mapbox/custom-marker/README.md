@@ -1,5 +1,3 @@
-Created by Alan Zhu on 16/11/16.
-
 ## Install MapBox SDK:
 
 1. Execute $ pod install
@@ -17,7 +15,7 @@ Cocoapods
 * https://cocoapods.org/
 * https://www.mapbox.com/ios-sdk/
 
-Map Style example:
+MapBox examples
 * https://www.mapbox.com/ios-sdk/examples/marker/
 * https://www.mapbox.com/ios-sdk/examples/marker-image/
 * https://www.mapbox.com/ios-sdk/examples/annotation-models/
