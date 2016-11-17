@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7DD77E461DDD410400B8F108 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7DD77E451DDD410400B8F108 /* Settings.bundle */; };
+		7DD77E4A1DDD419800B8F108 /* CustomAnnotationPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD77E491DDD419800B8F108 /* CustomAnnotationPoint.m */; };
+		7DD77E4C1DDD463B00B8F108 /* markers.json in Resources */ = {isa = PBXBuildFile; fileRef = 7DD77E4B1DDD463B00B8F108 /* markers.json */; };
+		7DD77E501DDD472900B8F108 /* MarkerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD77E4F1DDD472900B8F108 /* MarkerOperation.m */; };
+		7DD77E561DDD5F6200B8F108 /* marker_custom.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DD77E531DDD5F6200B8F108 /* marker_custom.png */; };
+		7DD77E571DDD5F6200B8F108 /* marker_custom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DD77E541DDD5F6200B8F108 /* marker_custom@2x.png */; };
+		7DD77E581DDD5F6200B8F108 /* marker_custom@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DD77E551DDD5F6200B8F108 /* marker_custom@3x.png */; };
 		7DEA99261DDD3C6B0092345F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DEA99251DDD3C6B0092345F /* main.m */; };
 		7DEA99291DDD3C6B0092345F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DEA99281DDD3C6B0092345F /* AppDelegate.m */; };
 		7DEA992C1DDD3C6B0092345F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DEA992B1DDD3C6B0092345F /* ViewController.m */; };
@@ -14,9 +21,21 @@
 		7DEA99321DDD3C6B0092345F /* Custom_Marker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7DEA99301DDD3C6B0092345F /* Custom_Marker.xcdatamodeld */; };
 		7DEA99341DDD3C6B0092345F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DEA99331DDD3C6B0092345F /* Assets.xcassets */; };
 		7DEA99371DDD3C6B0092345F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7DEA99351DDD3C6B0092345F /* LaunchScreen.storyboard */; };
+		EBBFD5DAF0A46054F6798FD6 /* libPods-Custom-Marker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F55EEE12A3686BCABF086E70 /* libPods-Custom-Marker.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		70889749E2FC2F73673FDB44 /* Pods-Custom-Marker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Custom-Marker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Custom-Marker/Pods-Custom-Marker.release.xcconfig"; sourceTree = "<group>"; };
+		7DD77E451DDD410400B8F108 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		7DD77E481DDD419800B8F108 /* CustomAnnotationPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotationPoint.h; sourceTree = "<group>"; };
+		7DD77E491DDD419800B8F108 /* CustomAnnotationPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotationPoint.m; sourceTree = "<group>"; };
+		7DD77E4B1DDD463B00B8F108 /* markers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = markers.json; sourceTree = "<group>"; };
+		7DD77E4E1DDD472900B8F108 /* MarkerOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkerOperation.h; sourceTree = "<group>"; };
+		7DD77E4F1DDD472900B8F108 /* MarkerOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarkerOperation.m; sourceTree = "<group>"; };
+		7DD77E511DDD474500B8F108 /* MarkerOperationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarkerOperationDelegate.h; sourceTree = "<group>"; };
+		7DD77E531DDD5F6200B8F108 /* marker_custom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marker_custom.png; sourceTree = "<group>"; };
+		7DD77E541DDD5F6200B8F108 /* marker_custom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker_custom@2x.png"; sourceTree = "<group>"; };
+		7DD77E551DDD5F6200B8F108 /* marker_custom@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker_custom@3x.png"; sourceTree = "<group>"; };
 		7DEA99211DDD3C6B0092345F /* Custom-Marker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Custom-Marker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DEA99251DDD3C6B0092345F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7DEA99271DDD3C6B0092345F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -28,6 +47,8 @@
 		7DEA99331DDD3C6B0092345F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7DEA99361DDD3C6B0092345F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7DEA99381DDD3C6B0092345F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E59C718211832D0F42798BEC /* Pods-Custom-Marker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Custom-Marker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Custom-Marker/Pods-Custom-Marker.debug.xcconfig"; sourceTree = "<group>"; };
+		F55EEE12A3686BCABF086E70 /* libPods-Custom-Marker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Custom-Marker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,17 +56,61 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBBFD5DAF0A46054F6798FD6 /* libPods-Custom-Marker.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7DD77E441DDD408000B8F108 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7DD77E521DDD5F5400B8F108 /* Images */,
+				7DD77E4B1DDD463B00B8F108 /* markers.json */,
+				7DD77E451DDD410400B8F108 /* Settings.bundle */,
+			);
+			name = Resources;
+			path = "Custom-Marker/Resources";
+			sourceTree = "<group>";
+		};
+		7DD77E471DDD412800B8F108 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7DD77E481DDD419800B8F108 /* CustomAnnotationPoint.h */,
+				7DD77E491DDD419800B8F108 /* CustomAnnotationPoint.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7DD77E4D1DDD46DB00B8F108 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				7DD77E511DDD474500B8F108 /* MarkerOperationDelegate.h */,
+				7DD77E4E1DDD472900B8F108 /* MarkerOperation.h */,
+				7DD77E4F1DDD472900B8F108 /* MarkerOperation.m */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
+		7DD77E521DDD5F5400B8F108 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				7DD77E531DDD5F6200B8F108 /* marker_custom.png */,
+				7DD77E541DDD5F6200B8F108 /* marker_custom@2x.png */,
+				7DD77E551DDD5F6200B8F108 /* marker_custom@3x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		7DEA99181DDD3C6A0092345F = {
 			isa = PBXGroup;
 			children = (
 				7DEA99231DDD3C6B0092345F /* Custom-Marker */,
+				86148CA9D84B74C5B804918B /* Frameworks */,
+				94F391E65D5FCCD52437EA7D /* Pods */,
 				7DEA99221DDD3C6B0092345F /* Products */,
+				7DD77E441DDD408000B8F108 /* Resources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,16 +125,18 @@
 		7DEA99231DDD3C6B0092345F /* Custom-Marker */ = {
 			isa = PBXGroup;
 			children = (
+				7DD77E471DDD412800B8F108 /* Models */,
+				7DD77E4D1DDD46DB00B8F108 /* Operations */,
+				7DEA99241DDD3C6B0092345F /* Supporting Files */,
 				7DEA99271DDD3C6B0092345F /* AppDelegate.h */,
 				7DEA99281DDD3C6B0092345F /* AppDelegate.m */,
+				7DEA99331DDD3C6B0092345F /* Assets.xcassets */,
+				7DEA99301DDD3C6B0092345F /* Custom_Marker.xcdatamodeld */,
+				7DEA99381DDD3C6B0092345F /* Info.plist */,
+				7DEA99351DDD3C6B0092345F /* LaunchScreen.storyboard */,
+				7DEA992D1DDD3C6B0092345F /* Main.storyboard */,
 				7DEA992A1DDD3C6B0092345F /* ViewController.h */,
 				7DEA992B1DDD3C6B0092345F /* ViewController.m */,
-				7DEA992D1DDD3C6B0092345F /* Main.storyboard */,
-				7DEA99331DDD3C6B0092345F /* Assets.xcassets */,
-				7DEA99351DDD3C6B0092345F /* LaunchScreen.storyboard */,
-				7DEA99381DDD3C6B0092345F /* Info.plist */,
-				7DEA99301DDD3C6B0092345F /* Custom_Marker.xcdatamodeld */,
-				7DEA99241DDD3C6B0092345F /* Supporting Files */,
 			);
 			path = "Custom-Marker";
 			sourceTree = "<group>";
@@ -82,6 +149,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		86148CA9D84B74C5B804918B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F55EEE12A3686BCABF086E70 /* libPods-Custom-Marker.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		94F391E65D5FCCD52437EA7D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E59C718211832D0F42798BEC /* Pods-Custom-Marker.debug.xcconfig */,
+				70889749E2FC2F73673FDB44 /* Pods-Custom-Marker.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -89,9 +173,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7DEA993B1DDD3C6B0092345F /* Build configuration list for PBXNativeTarget "Custom-Marker" */;
 			buildPhases = (
+				F68FE94FC7F29203832928E1 /* 📦 Check Pods Manifest.lock */,
 				7DEA991D1DDD3C6A0092345F /* Sources */,
 				7DEA991E1DDD3C6A0092345F /* Frameworks */,
 				7DEA991F1DDD3C6A0092345F /* Resources */,
+				0CE8554871B7DEAA45A1647A /* 📦 Embed Pods Frameworks */,
+				CF397041B5E9F10BBB9B4A06 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -113,7 +200,6 @@
 				TargetAttributes = {
 					7DEA99201DDD3C6A0092345F = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = XMBQT842D9;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -141,13 +227,66 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DD77E561DDD5F6200B8F108 /* marker_custom.png in Resources */,
+				7DD77E461DDD410400B8F108 /* Settings.bundle in Resources */,
+				7DD77E571DDD5F6200B8F108 /* marker_custom@2x.png in Resources */,
+				7DD77E4C1DDD463B00B8F108 /* markers.json in Resources */,
 				7DEA99371DDD3C6B0092345F /* LaunchScreen.storyboard in Resources */,
 				7DEA99341DDD3C6B0092345F /* Assets.xcassets in Resources */,
+				7DD77E581DDD5F6200B8F108 /* marker_custom@3x.png in Resources */,
 				7DEA992F1DDD3C6B0092345F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0CE8554871B7DEAA45A1647A /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Custom-Marker/Pods-Custom-Marker-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CF397041B5E9F10BBB9B4A06 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Custom-Marker/Pods-Custom-Marker-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F68FE94FC7F29203832928E1 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7DEA991D1DDD3C6A0092345F /* Sources */ = {
@@ -155,9 +294,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				7DEA992C1DDD3C6B0092345F /* ViewController.m in Sources */,
+				7DD77E4A1DDD419800B8F108 /* CustomAnnotationPoint.m in Sources */,
 				7DEA99291DDD3C6B0092345F /* AppDelegate.m in Sources */,
 				7DEA99321DDD3C6B0092345F /* Custom_Marker.xcdatamodeld in Sources */,
 				7DEA99261DDD3C6B0092345F /* main.m in Sources */,
+				7DD77E501DDD472900B8F108 /* MarkerOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +342,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -249,6 +391,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -275,24 +418,28 @@
 		};
 		7DEA993C1DDD3C6B0092345F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E59C718211832D0F42798BEC /* Pods-Custom-Marker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = XMBQT842D9;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Custom-Marker/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "onemap.sg.Custom-Marker";
+				PRODUCT_BUNDLE_IDENTIFIER = "onemap.sg.examples.ios.custom-marker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
 		7DEA993D1DDD3C6B0092345F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 70889749E2FC2F73673FDB44 /* Pods-Custom-Marker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = XMBQT842D9;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Custom-Marker/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "onemap.sg.Custom-Marker";
+				PRODUCT_BUNDLE_IDENTIFIER = "onemap.sg.examples.ios.custom-marker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -316,6 +463,7 @@
 				7DEA993D1DDD3C6B0092345F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

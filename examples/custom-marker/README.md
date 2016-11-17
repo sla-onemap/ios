@@ -3,7 +3,6 @@ Created by Alan Zhu on 16/11/16.
 ## Install MapBox SDK:
 
 1. Execute $ pod install
-
 2. Open the project with <project name>.xcworkspace
 
 
@@ -19,12 +18,7 @@ Cocoapods
 * https://www.mapbox.com/ios-sdk/
 
 Map Style example:
-* https://www.mapbox.com/ios-sdk/examples/custom-style/
-
-
-OneMap2 basemap styles Visit:
-* https://docs.onemap.sg/maps/
-
-
-
-
+* https://www.mapbox.com/ios-sdk/examples/marker/
+* https://www.mapbox.com/ios-sdk/examples/marker-image/
+* https://www.mapbox.com/ios-sdk/examples/annotation-models/
+* https://www.mapbox.com/ios-sdk/examples/callout-delegate/

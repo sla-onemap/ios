@@ -6,10 +6,17 @@
 //  Copyright © 2016 sg.onemap. All rights reserved.
 //
 
+#import <Mapbox/Mapbox.h>
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+#import "MarkerOperationDelegate.h"
 
+@interface ViewController : UIViewController <MGLMapViewDelegate, MarkerOperationDelegate>
+{
+    MGLMapView * mapView;
+}
+
+@property (retain, nonatomic) IBOutlet MGLMapView * mapView;
 
 @end
 
