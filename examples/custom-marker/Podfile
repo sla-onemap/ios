@@ -1,5 +1,5 @@
 platform :ios, '8.1'
 
-target 'Maps' do
+target ‘Custom-Marker’ do
     pod 'Mapbox-iOS-SDK', '~> 3.3.6'
 end
