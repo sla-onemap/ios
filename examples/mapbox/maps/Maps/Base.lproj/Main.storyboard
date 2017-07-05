@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1D1-dN-FDc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1D1-dN-FDc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -42,10 +42,18 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <items>
-                                    <tabBarItem title="Default" image="icon_map.png" selectedImage="icon_map.png" id="DQu-3H-iWX"/>
-                                    <tabBarItem tag="1" title="Original" image="icon_map.png" selectedImage="icon_map.png" id="mXo-Ld-LBY"/>
-                                    <tabBarItem tag="2" title="Night" image="icon_map.png" selectedImage="icon_map.png" id="gZT-Xz-hJ2"/>
-                                    <tabBarItem tag="3" title="Grey" image="icon_map.png" selectedImage="icon_map.png" id="ALn-dA-4pN"/>
+                                    <tabBarItem title="Default" image="icon_map.png" selectedImage="icon_map.png" id="DQu-3H-iWX">
+                                        <inset key="imageInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                    </tabBarItem>
+                                    <tabBarItem tag="1" title="Original" image="icon_map.png" selectedImage="icon_map.png" id="mXo-Ld-LBY">
+                                        <inset key="imageInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                    </tabBarItem>
+                                    <tabBarItem tag="2" title="Night" image="icon_map.png" selectedImage="icon_map.png" id="gZT-Xz-hJ2">
+                                        <inset key="imageInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                    </tabBarItem>
+                                    <tabBarItem tag="3" title="Grey" image="icon_map.png" selectedImage="icon_map.png" id="ALn-dA-4pN">
+                                        <inset key="imageInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                    </tabBarItem>
                                 </items>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>

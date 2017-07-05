@@ -27,42 +27,29 @@
      Project configurations:
      - Import Settings.bundle into the project
      - info.plist
-     - Add the location privacy descriptions.
-     - Add App Transport Security Settings to allow Allow Arbitrary Loads.
+        - Add the Location Privacy Descriptions.
+        - Add App Transport Security Settings to allow Allow Arbitrary Loads.
  
 *********************************************************************************/
 
 #import "ViewController.h"
 
-@interface ViewController ()
+#import <Mapbox/Mapbox.h>
+
+@interface ViewController () <MGLMapViewDelegate, UITabBarDelegate>
 {
-    //Track current map style.
-    NSInteger mapStyleTag;
+    IBOutlet MGLMapView * mapView;
+    
+    IBOutlet UIButton * gpsButton;
+    
+    IBOutlet UITabBar * tabBar;
     
     NSArray * basemaps;
 }
 @end
 
 @implementation ViewController
-@synthesize mapView;
-@synthesize gpsButton;
-@synthesize tabBar;
 
-static CGFloat const CAMERA_ANIMATION_DURATION  = 0.6f;
-
-static CGFloat const MAP_ZOOM_DISTANCE          = 996.0f;
-
-static CGFloat const MAP_ZOOM_MAX               = 18.0f;
-
-static CGFloat const MAP_ZOOM_MIN               = 10.0f;
-
-static NSString * const FORMAT_MAP_URL          = @"%@%@%@";
-    
-static NSString * const URL_MAP                 = @"https://maps-json.onemap.sg/";
-
-static NSString * const URL_MAP_EXTN            = @".json";
-
-    
 #pragma mark - View Life Cycle Methods
     
 - (void)viewDidLoad
@@ -82,47 +69,56 @@ static NSString * const URL_MAP_EXTN            = @".json";
     
 #pragma mark - Map Methods
 
+/**
+ * Initialize Map View and set the tab bar's the initial map style option.
+ */
+
 - (void)initMapView
 {
     //Select the first tab bar item.
-    UITabBarItem * tabBarItem = [self.tabBar.items objectAtIndex:0];
-    
-    mapStyleTag = tabBarItem.tag;
-    
-    [self.tabBar setSelectedItem:tabBarItem];
+    [tabBar setSelectedItem:[tabBar.items objectAtIndex:0]];
     
     
     //We shall use the Default style for this example.
-    NSURL * mapStyleURL = [self getMapStyleURLForStyle:tabBarItem.title];
+    NSString * mapStyle = [basemaps objectAtIndex:tabBar.selectedItem.tag];
+    
+    
+    // Get the .json link for the selected basemap.
+    NSURL * mapStyleURL = [self getMapStyleURLForStyle:mapStyle];
+    
     
     // Initialize the map view
-    self.mapView = [[MGLMapView alloc] initWithFrame:self.view.bounds styleURL:mapStyleURL];
+    mapView = [[MGLMapView alloc] initWithFrame:self.view.bounds styleURL:mapStyleURL];
     
-    self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
     
     // Set the delegate property of our map view to self after instantiating it
-    [self.mapView setDelegate:self];
+    [mapView setDelegate:self];
+    
     
     // Set the min and max zoom levels of the map view.
-    [self.mapView setMinimumZoomLevel:MAP_ZOOM_MIN];
+    [mapView setMinimumZoomLevel:10.0f];
     
-    [self.mapView setMaximumZoomLevel:MAP_ZOOM_MAX];
+    [mapView setMaximumZoomLevel:18.0f];
     
-    // Hides the mapbox logo and i button at the bottom
-    [self.mapView.logoView setHidden:YES];
     
-    [self.mapView.attributionButton setHidden:YES];
+    // Hides the mapbox logo and info button at the bottom
+    [mapView.logoView setHidden:YES];
+    
+    [mapView.attributionButton setHidden:YES];
+    
     
     //Set the map's center coordinates and default zoom level to the merlion park.
     CLLocationCoordinate2D merlionParkLocation = CLLocationCoordinate2DMake(1.2867888749929002, 103.8545510172844);
     
-    [self.mapView setCenterCoordinate:merlionParkLocation zoomLevel:12 animated:NO];
+    [mapView setCenterCoordinate:merlionParkLocation
+                            zoomLevel:12.0f
+                             animated:NO];
     
-    // Add map view to view.
-    [self.view addSubview:self.mapView];
     
-    // Move map view to the back.
-    [self.view sendSubviewToBack:self.mapView];
+    // Add map view below the tab bar
+    [self.view insertSubview:mapView belowSubview:tabBar];
 }
 
 
@@ -130,15 +126,16 @@ static NSString * const URL_MAP_EXTN            = @".json";
 
 - (IBAction)gpsTouchUpInside:(UIButton *)button
 {
-    if(self.mapView)
+    if(mapView)
     {
+        // Toggle user location indicator state.
         if(!button.selected)
         {
-            [self.mapView setShowsUserLocation:YES];
+            [mapView setShowsUserLocation:YES];
         }
         else
         {
-            [self.mapView setShowsUserLocation:NO];
+            [mapView setShowsUserLocation:NO];
         }
     }
 }
@@ -148,28 +145,29 @@ static NSString * const URL_MAP_EXTN            = @".json";
     
 - (void)mapViewDidFinishLoadingMap:(nonnull MGLMapView *)_mapView
 {
-    NSLog(@"Map view successfully loaded.");
+    [self showOKAlertWithTitle:@"Map" message:@"Map successfully loaded."];
 }
 
 - (void)mapView:(nonnull MGLMapView *)_mapView didUpdateUserLocation:(nullable MGLUserLocation *)userLocation
 {
     if(!gpsButton.selected)
     {
-        //Turn on the GPS button.
+        // Turn on the GPS button.
         [gpsButton setSelected:YES];
     
         [gpsButton setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
         
-        // Zoom to user location.
-        CGFloat pitch = mapView.camera.pitch;
         
-        CGFloat heading = mapView.camera.heading;
-        
+        // Zoom to user's location.
         CAMediaTimingFunction * mediaTiming = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
         
-        MGLMapCamera * camera = [MGLMapCamera cameraLookingAtCenterCoordinate:_mapView.userLocation.coordinate fromDistance:MAP_ZOOM_DISTANCE pitch:pitch heading:heading];
+        MGLMapCamera * camera = [MGLMapCamera
+                                 cameraLookingAtCenterCoordinate:_mapView.userLocation.coordinate
+                                 fromDistance:996.0f
+                                 pitch:mapView.camera.pitch
+                                 heading:mapView.camera.heading];
         
-        [_mapView setCamera:camera withDuration:CAMERA_ANIMATION_DURATION animationTimingFunction:mediaTiming];
+        [_mapView setCamera:camera withDuration:0.6f animationTimingFunction:mediaTiming];
     }
 }
 
@@ -177,7 +175,7 @@ static NSString * const URL_MAP_EXTN            = @".json";
 {
     if(gpsButton.selected)
     {
-        //Turn off the GPS button.
+        // Turn off the GPS button.
         [gpsButton setSelected:NO];
         
         [gpsButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
@@ -187,28 +185,57 @@ static NSString * const URL_MAP_EXTN            = @".json";
 
 #pragma mark - Tab Bar Delegate
     
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+- (void)tabBar:(UITabBar *)_tabBar didSelectItem:(UITabBarItem *)_item
 {
-    if(self.mapView && mapStyleTag != item.tag)
+    if(mapView)
     {
-        //If the map style is different, change the style URL on the map view.
-        mapStyleTag = item.tag;
+        // Load the selected map style.
+        NSURL * mapStyleURL = [self getMapStyleURLForStyle:[basemaps objectAtIndex:_item.tag]];
         
-        NSURL * mapStyleURL = [self getMapStyleURLForStyle:[basemaps objectAtIndex:item.tag]];
-        
-        [self.mapView setStyleURL:mapStyleURL];
+        [mapView setStyleURL:mapStyleURL];
     }
 }
 
+/**
+ * Initialize Map View and set the Tab Bar's selected item to the initial map style option.
+ *
+ * @param mapStyle Basemap style to be loaded.
+ * @return An URL of the basemap style.
+ */
 
-- (NSURL *)getMapStyleURLForStyle:(NSString *)style
+- (NSURL *)getMapStyleURLForStyle:(NSString *)mapStyle
 {
-    NSString * urlString = [NSString stringWithFormat:FORMAT_MAP_URL,
-                            URL_MAP,
-                            style,
-                            URL_MAP_EXTN];
+    NSString * urlString = [NSString stringWithFormat:@"https://maps-json.onemap.sg/%@.json", mapStyle];
     
     return [NSURL URLWithString:urlString];
+}
+
+
+#pragma mark - Alert View Methods
+
+/**
+ * Initialize Map View and set the Tab Bar's selected item to the initial map style option.
+ *
+ * @param title The title of the alert. Use this string to get the user’s attention and communicate the reason for the alert.
+ * @param message Descriptive text that provides additional details about the reason for the alert.
+ */
+
+- (void)showOKAlertWithTitle:(NSString *)title message:(NSString *)message
+{
+    //show alert
+    UIAlertAction *alertAction = [UIAlertAction
+                                  actionWithTitle:@"OK"
+                                  style:UIAlertActionStyleDefault
+                                  handler:nil];
+    
+    UIAlertController *alertCtrl = [UIAlertController
+                                    alertControllerWithTitle:title
+                                    message:message
+                                    preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertCtrl addAction:alertAction];
+    
+    [self presentViewController:alertCtrl animated:YES completion:nil];
 }
 
 @end

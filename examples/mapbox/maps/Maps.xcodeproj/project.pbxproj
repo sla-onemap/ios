@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D692E941F0CA2270046A975 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D692E931F0CA2270046A975 /* Icons.xcassets */; };
 		7DBCDA1B1DB4767F005D1043 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 7DBCDA1A1DB4767F005D1043 /* Podfile */; };
-		7DBCDA211DB47708005D1043 /* icon_map.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DBCDA1E1DB47708005D1043 /* icon_map.png */; };
-		7DBCDA221DB47708005D1043 /* icon_map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DBCDA1F1DB47708005D1043 /* icon_map@2x.png */; };
-		7DBCDA231DB47708005D1043 /* icon_map@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DBCDA201DB47708005D1043 /* icon_map@3x.png */; };
 		7DBCDA251DB47728005D1043 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7DBCDA241DB47728005D1043 /* Settings.bundle */; };
 		7DF8DEFE1DB476180013E65F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF8DEFD1DB476180013E65F /* main.m */; };
 		7DF8DF011DB476180013E65F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DF8DF001DB476180013E65F /* AppDelegate.m */; };
@@ -24,10 +22,8 @@
 
 /* Begin PBXFileReference section */
 		28189852DF46686C3EC03EBE /* Pods-Maps.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maps.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Maps/Pods-Maps.debug.xcconfig"; sourceTree = "<group>"; };
+		7D692E931F0CA2270046A975 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		7DBCDA1A1DB4767F005D1043 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
-		7DBCDA1E1DB47708005D1043 /* icon_map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_map.png; sourceTree = "<group>"; };
-		7DBCDA1F1DB47708005D1043 /* icon_map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_map@2x.png"; sourceTree = "<group>"; };
-		7DBCDA201DB47708005D1043 /* icon_map@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_map@3x.png"; sourceTree = "<group>"; };
 		7DBCDA241DB47728005D1043 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		7DF8DEF91DB476180013E65F /* Maps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Maps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DF8DEFD1DB476180013E65F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -69,9 +65,7 @@
 		7DBCDA1D1DB476FB005D1043 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				7DBCDA1E1DB47708005D1043 /* icon_map.png */,
-				7DBCDA1F1DB47708005D1043 /* icon_map@2x.png */,
-				7DBCDA201DB47708005D1043 /* icon_map@3x.png */,
+				7D692E931F0CA2270046A975 /* Icons.xcassets */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -167,11 +161,12 @@
 		7DF8DEF11DB476180013E65F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = OneMap;
 				TargetAttributes = {
 					7DF8DEF81DB476180013E65F = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 4L54L2HT2C;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -200,12 +195,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7DBCDA251DB47728005D1043 /* Settings.bundle in Resources */,
+				7D692E941F0CA2270046A975 /* Icons.xcassets in Resources */,
 				7DF8DF0F1DB476180013E65F /* LaunchScreen.storyboard in Resources */,
-				7DBCDA211DB47708005D1043 /* icon_map.png in Resources */,
 				7DF8DF0C1DB476180013E65F /* Assets.xcassets in Resources */,
 				7DBCDA1B1DB4767F005D1043 /* Podfile in Resources */,
-				7DBCDA231DB47708005D1043 /* icon_map@3x.png in Resources */,
-				7DBCDA221DB47708005D1043 /* icon_map@2x.png in Resources */,
 				7DF8DF071DB476180013E65F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -312,6 +305,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -360,6 +354,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -389,6 +384,7 @@
 			baseConfigurationReference = 28189852DF46686C3EC03EBE /* Pods-Maps.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4L54L2HT2C;
 				INFOPLIST_FILE = Maps/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -402,6 +398,7 @@
 			baseConfigurationReference = BAA5B7C983C00E27C6D6D6FC /* Pods-Maps.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4L54L2HT2C;
 				INFOPLIST_FILE = Maps/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
