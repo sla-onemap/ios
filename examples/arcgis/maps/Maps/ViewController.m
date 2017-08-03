@@ -8,28 +8,26 @@
 
 #import "ViewController.h"
 
-
 @interface ViewController () <AGSMapViewLayerDelegate, AGSLayerDelegate, AGSWMTSInfoDelegate>
 {
     AGSMapView * mapView;
     
-    AGSWMTSInfo * om2WMTSInfo;
+    AGSWMTSInfo * wmtsInfo;
     
-    AGSWMTSLayer * om2WMTSLayer;
+    AGSWMTSLayer * currentBaseMapLayer;
     
-    AGSWMTSLayerInfo * om2WMTSLayerInfo;
-    
-    AGSPoint * centerPoint;
-    
-    AGSEnvelope * maxEnvelope;
+    NSArray <AGSWMTSLayerInfo *> * wmtsLayerInfos;
 }
+
+@property(nonatomic, retain) IBOutlet AGSMapView * mapView;
+
 @end
 
 @implementation ViewController
+@synthesize mapView;
 
-NSString * OM2WMTSURL = @"https://mapservices.onemap.sg/wmts";
 
-NSString * OM2TILEJSONURL = @"https://maps-json.onemap.sg/Default.json";
+NSString * defaultMapStyle = @"DEFAULT";
 
 #pragma mark - View Lifecycle
 
@@ -51,17 +49,14 @@ NSString * OM2TILEJSONURL = @"https://maps-json.onemap.sg/Default.json";
     
     [mapView setLayerDelegate:self];
     
-    maxEnvelope = [[AGSEnvelope alloc] initWithXmin:12681.357850
-                                               ymin:15356.587937
-                                               xmax:42020.245328
-                                               ymax:53711.071046
-                                   spatialReference:nil];
-
-    [mapView setMaxEnvelope:maxEnvelope];
-    
     [self.view addSubview:mapView];
 
-    [self initOM2WMTSInfo];
+    
+    NSURL * url = [NSURL URLWithString:@"https://mapservices.onemap.sg/wmts"];
+    
+    wmtsInfo = [AGSWMTSInfo wmtsInfoWithURL:url];
+    
+    [wmtsInfo setDelegate:self];
 }
 
 #pragma mark - AGSMapViewLayerDelegate Methods
@@ -71,13 +66,19 @@ NSString * OM2TILEJSONURL = @"https://maps-json.onemap.sg/Default.json";
     NSLog(@"mapViewDidLoad");
 }
 
+
 #pragma mark - AGSLayerDelegate Methods
 
 - (void)layerDidLoad:(AGSLayer *)layer
 {
-    [om2WMTSLayer setStyle:om2WMTSLayerInfo.style];
+    NSLog(@"layerDidLoad");
     
-    [mapView zoomToResolution:12 withCenterPoint:maxEnvelope.center animated:YES];
+    if(layer == currentBaseMapLayer)
+    {
+        [mapView addMapLayer:currentBaseMapLayer withName:@"basemap"];
+    
+        [mapView zoomToEnvelope:layer.fullEnvelope animated:NO];
+    }
 }
 
 - (void)layer:(AGSLayer *)layer didInitializeSpatialReferenceStatus:(BOOL)srStatusValid
@@ -93,9 +94,31 @@ NSString * OM2TILEJSONURL = @"https://maps-json.onemap.sg/Default.json";
 
 #pragma mark - AGSWMTSInfoDelegate Methods
 
-- (void)wmtsInfoDidLoad:(AGSWMTSInfo *)wmtsInfo
+- (void)wmtsInfoDidLoad:(AGSWMTSInfo *)_wmtsInfo
 {
-    [self initOM2WMTSLayerWithWMTSInfo:wmtsInfo];
+    wmtsLayerInfos = [_wmtsInfo layerInfos];
+    
+    if(wmtsLayerInfos && wmtsLayerInfos.count > 1)
+    {
+        for(AGSWMTSLayerInfo * layerInfo in wmtsLayerInfos)
+        {
+            NSString * title = layerInfo.title;
+            
+            if(title && [title.uppercaseString isEqualToString:defaultMapStyle])
+            {
+                currentBaseMapLayer = [AGSWMTSLayer
+                                       wmtsLayerWithWMTSInfo:wmtsInfo
+                                       wmtsLayerInfo:layerInfo
+                                       spatialReference:nil];
+                
+                [currentBaseMapLayer setDelegate:self];
+                
+                return;
+            }
+        }
+    }
+    
+    NSLog(@"Unable to initialize WMTS Layer");
 }
 
 - (void)wmtsInfo:(AGSWMTSInfo *)wmtsInfo didFailToLoad:(NSError *)error
@@ -103,49 +126,5 @@ NSString * OM2TILEJSONURL = @"https://maps-json.onemap.sg/Default.json";
     NSLog(@"WMTS Info Failed To Load: %@", error.localizedDescription);
 }
 
-
-#pragma mark - WMTS Methods
-
-- (void)initOM2WMTSInfo
-{
-    NSURL * url = [NSURL URLWithString:OM2WMTSURL];
-    
-    om2WMTSInfo = [AGSWMTSInfo wmtsInfoWithURL:url];
-    
-    [om2WMTSInfo setDelegate:self];
-}
-
-- (void)initOM2WMTSLayerWithWMTSInfo:(AGSWMTSInfo *)wmtsInfo
-{
-    om2WMTSInfo = wmtsInfo;
-    
-    NSArray * layerInfos = [om2WMTSInfo layerInfos];
-    
-    if(layerInfos && layerInfos.count > 0)
-    {
-        // Load the Default Map Style
-        om2WMTSLayerInfo = [layerInfos objectAtIndex:0];
-        
-        //Get layerInfo and spatial reference from tileMatrixSetIds
-        [om2WMTSLayerInfo setTileMatrixSet:om2WMTSLayerInfo.tileMatrixSetIds[0]];
-        
-        om2WMTSLayer = [AGSWMTSLayer wmtsLayerWithWMTSInfo:om2WMTSInfo
-                                             wmtsLayerInfo:om2WMTSLayerInfo
-                                          spatialReference:nil];
-        
-        [om2WMTSLayer setOpacity:1.0f];
-        
-        [om2WMTSLayer setStyle:om2WMTSLayerInfo.style];
-        
-        
-        [om2WMTSLayer setDelegate:self];
-        
-        [mapView addMapLayer:om2WMTSLayer withName:@"basemap"];
-    }
-    else
-    {
-        NSLog(@"Unable to initialize WMTS Layer");
-    }
-}
 
 @end
