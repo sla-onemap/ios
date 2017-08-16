@@ -8,24 +8,22 @@
 
 #import "ViewController.h"
 
+#define esriWMTSURL @"http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer/WMTS"
+
+#define omWMTSURL @"https://mapservices.onemap.sg/wmts"
+
+
 @interface ViewController () <AGSMapViewLayerDelegate, AGSLayerDelegate, AGSWMTSInfoDelegate>
 {
-    AGSMapView * mapView;
-    
-    AGSWMTSInfo * wmtsInfo;
-    
-    AGSWMTSLayer * currentBaseMapLayer;
-    
-    NSArray <AGSWMTSLayerInfo *> * wmtsLayerInfos;
+    NSArray * wmtsLayerInfos;
 }
-
-@property(nonatomic, retain) IBOutlet AGSMapView * mapView;
 
 @end
 
 @implementation ViewController
 @synthesize mapView;
-
+@synthesize wmtsInfo;
+@synthesize wmtsLayer;
 
 NSString * defaultMapStyle = @"DEFAULT";
 
@@ -34,6 +32,27 @@ NSString * defaultMapStyle = @"DEFAULT";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    mapView = [[AGSMapView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
+    mapView.layerDelegate = self;
+    
+    [self.view addSubview:mapView];
+    
+    
+    wmtsInfo = [[AGSWMTSInfo alloc] initWithURL:[NSURL URLWithString:esriWMTSURL]];
+    
+    wmtsInfo.delegate = self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,29 +60,14 @@ NSString * defaultMapStyle = @"DEFAULT";
     [super didReceiveMemoryWarning];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    mapView = [[AGSMapView alloc] initWithFrame:self.view.bounds];
-    
-    [mapView setGridLineColor:[UIColor clearColor]];
-    
-    [mapView setLayerDelegate:self];
-    
-    [self.view addSubview:mapView];
-
-    
-    NSURL * url = [NSURL URLWithString:@"https://mapservices.onemap.sg/wmts"];
-    
-    wmtsInfo = [AGSWMTSInfo wmtsInfoWithURL:url];
-    
-    [wmtsInfo setDelegate:self];
-}
 
 #pragma mark - AGSMapViewLayerDelegate Methods
 
 - (void)mapViewDidLoad:(AGSMapView *)_mapView
 {
     NSLog(@"mapViewDidLoad");
+    
+    [mapView.locationDisplay startDataSource];
 }
 
 
@@ -72,13 +76,6 @@ NSString * defaultMapStyle = @"DEFAULT";
 - (void)layerDidLoad:(AGSLayer *)layer
 {
     NSLog(@"layerDidLoad");
-    
-    if(layer == currentBaseMapLayer)
-    {
-        [mapView addMapLayer:currentBaseMapLayer withName:@"basemap"];
-    
-        [mapView zoomToEnvelope:layer.fullEnvelope animated:NO];
-    }
 }
 
 - (void)layer:(AGSLayer *)layer didInitializeSpatialReferenceStatus:(BOOL)srStatusValid
@@ -98,8 +95,19 @@ NSString * defaultMapStyle = @"DEFAULT";
 {
     wmtsLayerInfos = [_wmtsInfo layerInfos];
     
-    if(wmtsLayerInfos && wmtsLayerInfos.count > 1)
+    
+    AGSWMTSLayerInfo * layerInfo = [wmtsLayerInfos objectAtIndex:0];
+    
+    wmtsLayer = [wmtsInfo wmtsLayerWithLayerInfo:layerInfo andSpatialReference:nil];
+    
+    wmtsLayer.delegate = self;
+    
+    [mapView addMapLayer:wmtsLayer withName:@"wmts Layer"];
+    
+    /*
+    if(wmtsLayerInfos && wmtsLayerInfos.count > 0)
     {
+        
         for(AGSWMTSLayerInfo * layerInfo in wmtsLayerInfos)
         {
             NSString * title = layerInfo.title;
@@ -117,8 +125,8 @@ NSString * defaultMapStyle = @"DEFAULT";
             }
         }
     }
-    
-    NSLog(@"Unable to initialize WMTS Layer");
+     
+    */
 }
 
 - (void)wmtsInfo:(AGSWMTSInfo *)wmtsInfo didFailToLoad:(NSError *)error

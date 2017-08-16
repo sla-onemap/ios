@@ -11,8 +11,18 @@
 
 @interface ViewController : UIViewController
 {
+    AGSMapView * mapView;
     
+    AGSWMTSInfo * wmtsInfo;
+    
+    AGSWMTSLayer * wmtsLayer;
 }
+
+@property(strong, nonatomic) IBOutlet AGSMapView * mapView;
+
+@property (strong, nonatomic) AGSWMTSInfo * wmtsInfo;
+
+@property (strong, nonatomic) AGSWMTSLayer * wmtsLayer;
 
 @end
 
