@@ -8,24 +8,8 @@
 
 #import "ViewController.h"
 
-#define esriWMTSURL @"http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer/WMTS"
-
-#define omWMTSURL @"https://mapservices.onemap.sg/wmts"
-
-
-@interface ViewController () <AGSMapViewLayerDelegate, AGSLayerDelegate, AGSWMTSInfoDelegate>
-{
-    NSArray * wmtsLayerInfos;
-}
-
-@end
-
 @implementation ViewController
-@synthesize mapView;
-@synthesize wmtsInfo;
-@synthesize wmtsLayer;
-
-NSString * defaultMapStyle = @"DEFAULT";
+@synthesize mapView = _mapView;
 
 #pragma mark - View Lifecycle
 
@@ -33,26 +17,16 @@ NSString * defaultMapStyle = @"DEFAULT";
 {
     [super viewDidLoad];
     
-    mapView = [[AGSMapView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.mapView = [[AGSMapView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    mapView.layerDelegate = self;
+    self.mapView.layerDelegate = self;
     
-    [self.view addSubview:mapView];
+    [self.view addSubview:self.mapView];
     
     
-    wmtsInfo = [[AGSWMTSInfo alloc] initWithURL:[NSURL URLWithString:esriWMTSURL]];
+    self.wmtsInfo = [[AGSWMTSInfo alloc] initWithURL:[NSURL URLWithString:esriWMTSURL]];
     
-    wmtsInfo.delegate = self;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
+    self.wmtsInfo.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,70 +37,29 @@ NSString * defaultMapStyle = @"DEFAULT";
 
 #pragma mark - AGSMapViewLayerDelegate Methods
 
-- (void)mapViewDidLoad:(AGSMapView *)_mapView
+- (void)mapViewDidLoad:(AGSMapView *)mapView
 {
     NSLog(@"mapViewDidLoad");
     
-    [mapView.locationDisplay startDataSource];
-}
-
-
-#pragma mark - AGSLayerDelegate Methods
-
-- (void)layerDidLoad:(AGSLayer *)layer
-{
-    NSLog(@"layerDidLoad");
-}
-
-- (void)layer:(AGSLayer *)layer didInitializeSpatialReferenceStatus:(BOOL)srStatusValid
-{
-    NSLog(@"didInitializeSpatialReferenceStatus: %@", layer.name);
-}
-
-- (void)layer:(AGSLayer *)layer didFailToLoadWithError:(NSError *)error
-{
-    NSLog(@"Layer Failed To Load: %@", error.localizedDescription);
+    [self.mapView.locationDisplay startDataSource];
 }
 
 
 #pragma mark - AGSWMTSInfoDelegate Methods
 
-- (void)wmtsInfoDidLoad:(AGSWMTSInfo *)_wmtsInfo
+- (void)wmtsInfoDidLoad:(AGSWMTSInfo *)wmtsInfo
 {
-    wmtsLayerInfos = [_wmtsInfo layerInfos];
+    NSLog(@"wmtsInfoDidLoad");
     
+    NSArray * layerInfos = [wmtsInfo layerInfos];
     
-    AGSWMTSLayerInfo * layerInfo = [wmtsLayerInfos objectAtIndex:0];
+    AGSWMTSLayerInfo *layerInfo = [layerInfos objectAtIndex:0];
     
-    wmtsLayer = [wmtsInfo wmtsLayerWithLayerInfo:layerInfo andSpatialReference:nil];
+    self.wmtsLayer = [wmtsInfo wmtsLayerWithLayerInfo:layerInfo andSpatialReference:nil];
     
-    wmtsLayer.delegate = self;
+    [self.wmtsLayer setDelegate:self];
     
-    [mapView addMapLayer:wmtsLayer withName:@"wmts Layer"];
-    
-    /*
-    if(wmtsLayerInfos && wmtsLayerInfos.count > 0)
-    {
-        
-        for(AGSWMTSLayerInfo * layerInfo in wmtsLayerInfos)
-        {
-            NSString * title = layerInfo.title;
-            
-            if(title && [title.uppercaseString isEqualToString:defaultMapStyle])
-            {
-                currentBaseMapLayer = [AGSWMTSLayer
-                                       wmtsLayerWithWMTSInfo:wmtsInfo
-                                       wmtsLayerInfo:layerInfo
-                                       spatialReference:nil];
-                
-                [currentBaseMapLayer setDelegate:self];
-                
-                return;
-            }
-        }
-    }
-     
-    */
+    [self.mapView addMapLayer:self.wmtsLayer withName:@"wmts Layer"];
 }
 
 - (void)wmtsInfo:(AGSWMTSInfo *)wmtsInfo didFailToLoad:(NSError *)error
@@ -134,5 +67,23 @@ NSString * defaultMapStyle = @"DEFAULT";
     NSLog(@"WMTS Info Failed To Load: %@", error.localizedDescription);
 }
 
+
+
+#pragma mark - AGSLayerDelegate Methods
+
+- (void)layerDidLoad:(AGSLayer *)layer
+{
+    NSLog(@"layerDidLoadForLayerName : %@", layer.name);
+}
+
+- (void)layer:(AGSLayer *)layer didInitializeSpatialReferenceStatus:(BOOL)srStatusValid
+{
+    NSLog(@"didInitializeSpatialReferenceStatus: %@", layer.spatialReference);
+}
+
+- (void)layer:(AGSLayer *)layer didFailToLoadWithError:(NSError *)error
+{
+    NSLog(@"Layer Failed To Load: %@", error.localizedDescription);
+}
 
 @end
