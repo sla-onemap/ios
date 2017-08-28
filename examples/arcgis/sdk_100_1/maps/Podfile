@@ -1,0 +1,5 @@
+platform :ios, '9.1'
+
+target 'Maps' do
+    pod 'ArcGIS-Runtime-SDK-iOS', '100.1'
+end
