@@ -357,9 +357,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = XMBQT842D9;
 				INFOPLIST_FILE = Maps/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sg.onemap.examples.ios.arcgis.sdk100.maps.Maps;
+				PRODUCT_BUNDLE_IDENTIFIER = sg.onemap.examples.ios.arcgis.sdk100.maps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -371,9 +371,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = XMBQT842D9;
 				INFOPLIST_FILE = Maps/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = sg.onemap.examples.ios.arcgis.sdk100.maps.Maps;
+				PRODUCT_BUNDLE_IDENTIFIER = sg.onemap.examples.ios.arcgis.sdk100.maps;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

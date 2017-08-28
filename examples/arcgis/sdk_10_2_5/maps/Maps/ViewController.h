@@ -9,11 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <ArcGIS/ArcGIS.h>
 
-#define esriWMTSURL @"http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer/WMTS"
-
-#define omWMTSURL @"https://mapservices.onemap.sg/wmts"
-
-
 @interface ViewController : UIViewController <AGSMapViewLayerDelegate, AGSLayerDelegate, AGSWMTSInfoDelegate>
 {
     AGSMapView * _mapView;

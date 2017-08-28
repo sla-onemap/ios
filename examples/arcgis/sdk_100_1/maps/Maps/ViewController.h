@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <ArcGIS/ArcGIS.h>
 
 @interface ViewController : UIViewController
+{
+    AGSMapView * _mapView;
+}
 
+@property(retain, nonatomic) IBOutlet AGSMapView * mapView;
 
 @end
 

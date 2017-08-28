@@ -23,8 +23,17 @@
     
     [self.view addSubview:self.mapView];
     
+    // We will try to load esri's world map layer to test if the SDK can display the map layer.
+    NSString * esri_wmts_url = @"http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer/WMTS";
     
-    self.wmtsInfo = [[AGSWMTSInfo alloc] initWithURL:[NSURL URLWithString:esriWMTSURL]];
+    NSString * om2_prod_wmts_url = @"http://mapservices.onemap.sg/wmts";
+    
+# warning Note: We are shall use the improved WMTS map link for this example. It is currently going through UAT thus we will push it to production soon.
+    
+    NSString * om2_uat_wmts_url = @"http://mapproxy.onemap.sg/wmts/1.0.0/WMTSCapabilities.xml";
+    
+    
+    self.wmtsInfo = [[AGSWMTSInfo alloc] initWithURL:[NSURL URLWithString:esri_wmts_url]];
     
     self.wmtsInfo.delegate = self;
 }
@@ -39,8 +48,6 @@
 
 - (void)mapViewDidLoad:(AGSMapView *)mapView
 {
-    NSLog(@"mapViewDidLoad");
-    
     [self.mapView.locationDisplay startDataSource];
 }
 
@@ -49,11 +56,13 @@
 
 - (void)wmtsInfoDidLoad:(AGSWMTSInfo *)wmtsInfo
 {
-    NSLog(@"wmtsInfoDidLoad");
-    
     NSArray * layerInfos = [wmtsInfo layerInfos];
     
-    AGSWMTSLayerInfo *layerInfo = [layerInfos objectAtIndex:0];
+    AGSWMTSLayerInfo * layerInfo = [layerInfos objectAtIndex:0];
+    
+    NSLog(@"Loading layer: %@", layerInfo.title);
+    
+    
     
     self.wmtsLayer = [wmtsInfo wmtsLayerWithLayerInfo:layerInfo andSpatialReference:nil];
     
@@ -68,17 +77,11 @@
 }
 
 
-
 #pragma mark - AGSLayerDelegate Methods
 
 - (void)layerDidLoad:(AGSLayer *)layer
 {
     NSLog(@"layerDidLoadForLayerName : %@", layer.name);
-}
-
-- (void)layer:(AGSLayer *)layer didInitializeSpatialReferenceStatus:(BOOL)srStatusValid
-{
-    NSLog(@"didInitializeSpatialReferenceStatus: %@", layer.spatialReference);
 }
 
 - (void)layer:(AGSLayer *)layer didFailToLoadWithError:(NSError *)error
