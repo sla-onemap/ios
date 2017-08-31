@@ -126,7 +126,7 @@
                 {
                     NSString * name = [polygon attributeForKey:@"name"];
                     
-                    [self changeLineColorBasedOnFeatureName:name];
+                    [self changeColorBasedOnFeatureName:name];
                 }
                 
                 return;
@@ -138,26 +138,41 @@
 
 #pragma mark - Feature Methods
 
-- (void)changeLineColorBasedOnFeatureName:(NSString*)name
+- (void)changeColorBasedOnFeatureName:(NSString*)name
 {
-    MGLLineStyleLayer * layer = (MGLLineStyleLayer *)[mapView.style layerWithIdentifier:@"polylineLayer"];
+    MGLLineStyleLayer * lineLayer = (MGLLineStyleLayer *) [mapView.style layerWithIdentifier:@"polylineLayer"];
+    
+    MGLFillStyleLayer * fillLayer = (MGLFillStyleLayer *) [mapView.style layerWithIdentifier:@"polygonLayer"];
     
     if (name.length > 0)
     {
-        layer.lineColor = [MGLStyleValue
-                           valueWithInterpolationMode: MGLInterpolationModeCategorical
-                           sourceStops:@{
-                                         name: [MGLStyleValue valueWithRawValue:[UIColor redColor]]
+        lineLayer.lineColor = [MGLStyleValue
+                               valueWithInterpolationMode: MGLInterpolationModeCategorical
+                               sourceStops:@{
+                                             name: [MGLStyleValue valueWithRawValue:[UIColor redColor]]
+                                             }
+                               attributeName:@"name"
+                               options:@{
+                                         MGLStyleFunctionOptionDefaultValue: [MGLStyleValue valueWithRawValue:[UIColor lightGrayColor]]
                                          }
-                           attributeName:@"name"
-                           options:@{
-                                     MGLStyleFunctionOptionDefaultValue: [MGLStyleValue valueWithRawValue:[UIColor grayColor]]
-                                     }
-                           ];
+                               ];
+        
+        fillLayer.fillColor = [MGLStyleValue
+                               valueWithInterpolationMode: MGLInterpolationModeCategorical
+                               sourceStops:@{
+                                             name: [MGLStyleValue valueWithRawValue:[UIColor redColor]]
+                                             }
+                               attributeName:@"name"
+                               options:@{
+                                         MGLStyleFunctionOptionDefaultValue: [MGLStyleValue valueWithRawValue:[UIColor clearColor]]
+                                         }
+                               ];
     }
     else
     {
-        layer.lineColor = [MGLStyleValue valueWithRawValue:[UIColor grayColor]];
+        lineLayer.lineColor = [MGLStyleValue valueWithRawValue:[UIColor lightGrayColor]];
+        
+        fillLayer.fillColor = [MGLStyleValue valueWithRawValue:[UIColor clearColor]];
     }
 }
 
@@ -301,9 +316,9 @@
     
     layer.sourceLayerIdentifier = source.identifier;
     
-    layer.lineColor = [MGLStyleValue valueWithRawValue:[UIColor grayColor]];
+    layer.lineColor = [MGLStyleValue valueWithRawValue:[UIColor lightGrayColor]];
     
-    layer.lineWidth = [MGLStyleValue valueWithRawValue:@2];
+    layer.lineWidth = [MGLStyleValue valueWithRawValue:@1];
     
     layer.lineOpacity = [MGLStyleValue valueWithRawValue:@1];
     
