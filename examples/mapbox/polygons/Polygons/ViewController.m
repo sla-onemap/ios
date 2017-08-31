@@ -111,10 +111,10 @@
         
         CGRect pointRect = {point, CGSizeZero};
         
-        CGRect touchRect = CGRectInset(pointRect, -16.0, -16.0);
+        CGRect touchRect = CGRectInset(pointRect, -8.0, -8.0);
         
         
-        // Get first features within a rect the size of a touch (32x32).
+        // Get first features within a rect the size of a touch (16x16).
         
         for (id annotation in [mapView visibleFeaturesInRect:touchRect])
         {
@@ -124,17 +124,40 @@
                 
                 if(polygon && polygon.attributes)
                 {
-                    NSDictionary * attributes = polygon.attributes;
+                    NSString * name = [polygon attributeForKey:@"name"];
                     
-                    NSString * message = [NSString stringWithFormat:@"You have selected %@",
-                                          attributes[@"name"]];
-                    
-                    [self showOKAlertWithTitle:@"Polygon Selected" message:message];
+                    [self changeLineColorBasedOnFeatureName:name];
                 }
                 
                 return;
             }
         }
+    }
+}
+
+
+#pragma mark - Feature Methods
+
+- (void)changeLineColorBasedOnFeatureName:(NSString*)name
+{
+    MGLLineStyleLayer * layer = (MGLLineStyleLayer *)[mapView.style layerWithIdentifier:@"polylineLayer"];
+    
+    if (name.length > 0)
+    {
+        layer.lineColor = [MGLStyleValue
+                           valueWithInterpolationMode: MGLInterpolationModeCategorical
+                           sourceStops:@{
+                                         name: [MGLStyleValue valueWithRawValue:[UIColor redColor]]
+                                         }
+                           attributeName:@"name"
+                           options:@{
+                                     MGLStyleFunctionOptionDefaultValue: [MGLStyleValue valueWithRawValue:[UIColor grayColor]]
+                                     }
+                           ];
+    }
+    else
+    {
+        layer.lineColor = [MGLStyleValue valueWithRawValue:[UIColor grayColor]];
     }
 }
 
@@ -166,6 +189,8 @@
     
     NSMutableArray * polygonFeatures = [[NSMutableArray alloc] init];
     
+    NSMutableArray * polylineFeatures = [[NSMutableArray alloc] init];
+    
     for (NSUInteger i = 0 ; i < polygons.count; i++)
     {
         NSDictionary * polygon = polygons[i];
@@ -185,19 +210,34 @@
             coords[k] = CLLocationCoordinate2DMake(lat.doubleValue, lng.doubleValue);
         }
         
-        MGLPolygonFeature * polygonFeature = [MGLPolygonFeature
-                                              polygonWithCoordinates:coords
-                                              count:coordinates.count];
-        
         NSString * polygonName = [NSString stringWithFormat:@"polygon_%@", [NSNumber numberWithInteger:i].stringValue];
         
         NSDictionary * attributes = @{ @"name" : polygonName };
         
+        
+        
+        MGLPolygonFeature * polygonFeature = [MGLPolygonFeature
+                                              polygonWithCoordinates:coords
+                                              count:coordinates.count];
+        
         [polygonFeature setAttributes:attributes];
+        
+        
+        
+        
+        MGLPolylineFeature * polylineFeature = [MGLPolylineFeature
+                                                polylineWithCoordinates:coords
+                                                count:coordinates.count];
+        
+        [polylineFeature setAttributes:attributes];
+        
+        
         
         free(coords);
         
         [polygonFeatures addObject:polygonFeature];
+        
+        [polylineFeatures addObject:polylineFeature];
     }
     
     
@@ -208,32 +248,35 @@
                                           features:polygonFeatures
                                           options:nil];
     
-    MGLFillStyleLayer * polygonLayer = [self createFillStyleLayerWithShapeSource:polygonDataSource
-                                                                           color:[UIColor blueColor] identifier:@"polygonLayer"];
+    MGLFillStyleLayer * polygonLayer = [self
+                                        createFillStyleLayerWithShapeSource:polygonDataSource
+                                        identifier:@"polygonLayer"];
     
+    
+    MGLShapeSource * polylineDataSource = [[MGLShapeSource alloc]
+                                          initWithIdentifier:@"polylineLayerDataSource"
+                                          features:polylineFeatures
+                                          options:nil];
+    
+    MGLLineStyleLayer * polylineLayer = [self
+                                         createLineStyleLayerWithShapeSource:polylineDataSource
+                                         identifier:@"polylineLayer"];
     
     // Add layer to map
     [mapView.style addSource:polygonDataSource];
     
     [mapView.style addLayer:polygonLayer];
+    
+    
+    [mapView.style addSource:polylineDataSource];
+    
+    [mapView.style addLayer:polylineLayer];
 }
 
 
-/**
- * Creates a polygon fill style layer.
- *
- @discussion 
-    <b>MGLFillStyleLayer:</b>
-    https://www.mapbox.com/ios-sdk/api/3.6.2/Classes/MGLFillStyleLayer.html
- 
-    @param source Polygon data source.
-    @param color Color of the polygon.
-    @param identifier Unique layer identifier.
-    @return An initialized fill style layer.
- */
+#pragma mark - Layer Methods
 
 - (MGLFillStyleLayer *)createFillStyleLayerWithShapeSource:(MGLShapeSource *)source
-                                                  color:(UIColor *)color
                                              identifier:(NSString *)identifier
 {
     MGLFillStyleLayer * layer = [[MGLFillStyleLayer alloc]
@@ -242,24 +285,33 @@
     
     layer.sourceLayerIdentifier = source.identifier;
     
-    layer.fillOutlineColor = [MGLStyleValue valueWithRawValue:color];
+    layer.fillColor = [MGLStyleValue valueWithRawValue:[UIColor clearColor]];
     
-    layer.fillColor = [MGLStyleValue valueWithRawValue:color];
+    layer.fillOpacity = [MGLStyleValue valueWithRawValue:[NSNumber numberWithFloat:1.0f]];
     
-    layer.fillOpacity = [MGLStyleValue valueWithRawValue:[NSNumber numberWithFloat:0.3f]];
+    return layer;
+}
+
+- (MGLLineStyleLayer *)createLineStyleLayerWithShapeSource:(MGLShapeSource *)source
+                                                identifier:(NSString *)identifier
+{
+    MGLLineStyleLayer * layer = [[MGLLineStyleLayer alloc]
+                                 initWithIdentifier:identifier
+                                 source:source];
+    
+    layer.sourceLayerIdentifier = source.identifier;
+    
+    layer.lineColor = [MGLStyleValue valueWithRawValue:[UIColor grayColor]];
+    
+    layer.lineWidth = [MGLStyleValue valueWithRawValue:@2];
+    
+    layer.lineOpacity = [MGLStyleValue valueWithRawValue:@1];
     
     return layer;
 }
 
 
 #pragma mark - Alert Methods
-
-/**
- * Initialize Map View and set the Tab Bar's selected item to the initial map style option.
- *
- * @param title The title of the alert. Use this string to get the user’s attention and communicate the reason for the alert.
- * @param message Descriptive text that provides additional details about the reason for the alert.
- */
 
 - (void)showOKAlertWithTitle:(NSString *)title message:(NSString *)message
 {
