@@ -51,15 +51,11 @@
 {
     [super viewDidAppear:animated];
     
-    //NSString * wmtsURL = @"http://sampleserver6.arcgisonline.com/arcgis/rest/services/WorldTimeZones/MapServer/WMTS";
+    NSString * om2_prod_wmts_url = @"https://mapservices.onemap.sg/wmts";
     
-    NSString * om2_prod_wmts_url = @"http://mapservices.onemap.sg/wmts";
+    NSString * selectedMapStyle = @"DEFAULT";
     
-# warning Note: We are shall use the improved WMTS map link for this example. It is currently going through UAT thus we will push it to production soon.
-    
-    NSString * om2_uat_wmts_url = @"http://mapproxy.onemap.sg/wmts/1.0.0/WMTSCapabilities.xml";
-    
-    NSURL * url = [NSURL URLWithString:om2_uat_wmts_url];
+    NSURL * url = [NSURL URLWithString:om2_prod_wmts_url];
     
     wmtsService = [[AGSWMTSService alloc] initWithURL:url];
     
@@ -77,16 +73,22 @@
                 
                 if(layerInfos && layerInfos.count > 0)
                 {
-                    AGSWMTSLayerInfo * layerInfo = layerInfos[0];
+                    //Loop through the list to find the map style to be displayed.
                     
-                    NSLog(@"%@", layerInfo.layerID);
-                    
-                    currentBaseMapLayer = [AGSWMTSLayer WMTSLayerWithLayerInfo:layerInfo];
-                    
-                    [currentBaseMapLayer loadWithCompletion:^(NSError * _Nullable error)
-                     {
-                         [self wmtsLayerLoadCompletion:error];
-                     }];
+                    for (AGSWMTSLayerInfo * layerInfo in layerInfos)
+                    {
+                        if([layerInfo.layerID.uppercaseString isEqualToString:selectedMapStyle])
+                        {
+                            currentBaseMapLayer = [AGSWMTSLayer WMTSLayerWithLayerInfo:layerInfo];
+                            
+                            [currentBaseMapLayer loadWithCompletion:^(NSError * _Nullable error)
+                             {
+                                 [self wmtsLayerLoadCompletion:error];
+                             }];
+                            
+                            return;
+                        }
+                    }
                 }
             }
         }
