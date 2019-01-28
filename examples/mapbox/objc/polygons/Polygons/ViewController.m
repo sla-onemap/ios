@@ -75,7 +75,7 @@
     CLLocationCoordinate2D merlionParkLocation = CLLocationCoordinate2DMake(1.2867888749929002, 103.8545510172844);
     
     [mapView setCenterCoordinate:merlionParkLocation
-                       zoomLevel:10.0f
+                       zoomLevel:12.0f
                         animated:NO];
     
     
@@ -86,8 +86,6 @@
     
     [mapView addGestureRecognizer:mapViewTapGestureRecognizer];
     
-    
-    
     // Add map view below the tab bar
     [self.view addSubview:mapView];
 }
@@ -97,7 +95,9 @@
 
 - (void)mapViewDidFinishLoadingMap:(nonnull MGLMapView *)_mapView
 {
-    [self loadPolygonsDataFromFile];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self loadPolygonsDataFromFile];
+    });
 }
 
 
@@ -144,35 +144,34 @@
     
     MGLFillStyleLayer * fillLayer = (MGLFillStyleLayer *) [mapView.style layerWithIdentifier:@"polygonLayer"];
     
+    UIColor * defaultLineColor = [UIColor blueColor];
+    
+    UIColor * defaultFillColor = [UIColor clearColor];
+    
     if (name.length > 0)
     {
-        lineLayer.lineColor = [MGLStyleValue
-                               valueWithInterpolationMode: MGLInterpolationModeCategorical
-                               sourceStops:@{
-                                             name: [MGLStyleValue valueWithRawValue:[UIColor redColor]]
-                                             }
-                               attributeName:@"name"
-                               options:@{
-                                         MGLStyleFunctionOptionDefaultValue: [MGLStyleValue valueWithRawValue:[UIColor lightGrayColor]]
-                                         }
-                               ];
+        /*
+         Please read "Migrating from Style Functions to Expressions" > Categorical Section.
+         
+         Link: https://mapbox.github.io/mapbox-gl-native/macos/0.13.0/migrating-to-expressions.html
+         */
         
-        fillLayer.fillColor = [MGLStyleValue
-                               valueWithInterpolationMode: MGLInterpolationModeCategorical
-                               sourceStops:@{
-                                             name: [MGLStyleValue valueWithRawValue:[UIColor redColor]]
-                                             }
-                               attributeName:@"name"
-                               options:@{
-                                         MGLStyleFunctionOptionDefaultValue: [MGLStyleValue valueWithRawValue:[UIColor clearColor]]
-                                         }
-                               ];
+        lineLayer.lineColor = [NSExpression expressionWithFormat:@"MGL_MATCH(name, %@, %@, %@)",
+                               name,
+                               [UIColor redColor],
+                               defaultLineColor];
+        
+
+        fillLayer.fillColor = [NSExpression expressionWithFormat:@"MGL_MATCH(name, %@, %@, %@)",
+                               name,
+                               [UIColor redColor],
+                               defaultFillColor];
     }
     else
     {
-        lineLayer.lineColor = [MGLStyleValue valueWithRawValue:[UIColor lightGrayColor]];
+        lineLayer.lineColor = [NSExpression expressionForConstantValue:defaultLineColor];
         
-        fillLayer.fillColor = [MGLStyleValue valueWithRawValue:[UIColor clearColor]];
+        fillLayer.fillColor = [NSExpression expressionForConstantValue:defaultFillColor];
     }
 }
 
@@ -300,9 +299,9 @@
     
     layer.sourceLayerIdentifier = source.identifier;
     
-    layer.fillColor = [MGLStyleValue valueWithRawValue:[UIColor clearColor]];
+    layer.fillColor = [NSExpression expressionForConstantValue:[UIColor clearColor]];
     
-    layer.fillOpacity = [MGLStyleValue valueWithRawValue:[NSNumber numberWithFloat:1.0f]];
+    layer.fillOpacity = [NSExpression expressionForConstantValue:[NSNumber numberWithFloat:1.0f]];
     
     return layer;
 }
@@ -316,11 +315,11 @@
     
     layer.sourceLayerIdentifier = source.identifier;
     
-    layer.lineColor = [MGLStyleValue valueWithRawValue:[UIColor lightGrayColor]];
+    layer.lineColor = [NSExpression expressionForConstantValue:[UIColor blueColor]];
     
-    layer.lineWidth = [MGLStyleValue valueWithRawValue:@1];
+    layer.lineWidth = [NSExpression expressionForConstantValue:[NSNumber numberWithFloat:3.0f]];
     
-    layer.lineOpacity = [MGLStyleValue valueWithRawValue:@1];
+    layer.lineOpacity = [NSExpression expressionForConstantValue:[NSNumber numberWithFloat:1.0f]];
     
     return layer;
 }
