@@ -1,0 +1,28 @@
+{
+	"markers" : [
+		{
+			"name"			: "Merlion",
+			"description"	: "Half-fish and half-lion, the iconic Merlion resides at the waterfront Merlion Park.",
+			"latitude" 		: "1.286810774",
+			"longitude" 	: "103.8545349",
+			"hyperlink"		: "http://www.yoursingapore.com/see-do-singapore/recreation-leisure/viewpoints/merlion-park.html",
+			"imageURL"		: "http://www.yoursingapore.com/see-do-singapore/recreation-leisure/viewpoints/merlion-park/_jcr_content/par-carousel/carousel_detailpage/carousel/item_1.thumbnail.carousel-img.740.416.jpg"
+		},
+		{
+			"name"			: "Singapore Flyer",
+			"description"	: "This giant observation wheel offers 360-degree city views, a panorama that stretches to parts of Malaysia and Indonesia on a clear day.",
+			"latitude" 		: "1.289713418",
+			"longitude" 	: "103.8633722",
+			"hyperlink"		: "http://www.yoursingapore.com/see-do-singapore/recreation-leisure/viewpoints/singapore-flyer.html",
+			"imageURL"		: "http://www.yoursingapore.com/see-do-singapore/recreation-leisure/viewpoints/singapore-flyer/_jcr_content/par-carousel/carousel_detailpage/carousel/item_1.thumbnail.carousel-img.740.416.jpg"
+		},
+		{
+			"name"			: "Gardens by the Bay",
+			"description"	: "The lush and beautiful Gardens by the Bay is dominated by the sleekly sculptured biodomes – marvels of architecture, design and engineering.",
+			"latitude" 		: "1.28257793",
+			"longitude" 	: "103.8647187",
+			"hyperlink"		: "http://www.yoursingapore.com/see-do-singapore/architecture/modern/gardens-by-the-bay.html",
+			"imageURL"		: "http://www.yoursingapore.com/see-do-singapore/nature-wildlife/parks-gardens/gardens-by-the-bay/_jcr_content/par-carousel/carousel_detailpage/carousel/item_2.thumbnail.carousel-img.740.416.jpg"
+		}
+	]
+}
